@@ -60,12 +60,12 @@ export const AddModal = ({ open, setOpen }: ModalProps) => {
   const [description, setDescription] = useState("");
   const [subject, setSubject] = useState("");
   const [frequency, setFrequency] = useState("Weekly");
-  const [repeat, setRepeat] = useState("");
-  const [checkedDays, setCheckedDays] = useState([""]);
-  const [time, setTime] = useState("");
+  const [repeat, setRepeat] = useState<String[]>([]);
+  const [checkedDays, setCheckedDays] = useState<String[]>([]);
+  const [time, setTime] = useState("00:00 AM");
 
   const toggleDay = (day: string) => {
-    if (checkedDays.includes(day)) {
+    if (checkedDays?.includes(day)) {
       setCheckedDays(checkedDays.filter((d) => d !== day));
     } else {
       setCheckedDays([...checkedDays, day]);
@@ -74,22 +74,17 @@ export const AddModal = ({ open, setOpen }: ModalProps) => {
 
   const handleAdd = async () => {
     if (frequency == "Weekly") {
-      var repeatDays: string = "";
-      var days: string[] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-      days.forEach((day) => {
-        if (checkedDays.includes(day)) {
-          repeatDays += day;
-        }
-      });
-      setRepeat(repeatDays);
     }
     if (
       title &&
       description &&
       subject &&
       frequency &&
-      (frequency != "Daily" ? repeat : true) &&
+      (frequency != "Daily"
+        ? frequency == "Weekly"
+          ? checkedDays.length
+          : repeat.length
+        : true) &&
       time
     ) {
       var schedule = {
@@ -104,6 +99,15 @@ export const AddModal = ({ open, setOpen }: ModalProps) => {
       console.log(res);
     } else {
       console.log("something missing");
+      console.log(
+        title,
+        description,
+        subject,
+        frequency,
+        checkedDays,
+        repeat,
+        time
+      );
     }
   };
 
@@ -199,7 +203,7 @@ export const AddModal = ({ open, setOpen }: ModalProps) => {
                 </div>
               ) : (
                 <select
-                  onChange={(e) => setRepeat(e.target.value)}
+                  onChange={(e) => setRepeat([e.target.value])}
                   name="frequency"
                   id="frequency"
                   className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm ring-1 ring-inset ring-gray-200 hover:bg-gray-50 focus:outline-none"

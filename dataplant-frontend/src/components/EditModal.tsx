@@ -3,8 +3,9 @@ import { useState } from "react";
 interface ModalProps {
   open: boolean;
   setOpen: any;
+  data: any;
 }
-export const EditModal = ({ open, setOpen }: ModalProps) => {
+export const EditModal = ({ open, setOpen, data }: ModalProps) => {
   const times = [
     "00:00 AM",
     "00:30 AM",

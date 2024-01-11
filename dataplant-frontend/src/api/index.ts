@@ -25,7 +25,7 @@ export const addNewSchedule = async (newSchedule: ScheduleState) => {
     };
     const body = JSON.stringify(newSchedule);
 
-    const res = await instance.post("/", body, config);
+    const res = await instance.post("/schedules", body, config);
 
     return res.data;
   } catch (e) {

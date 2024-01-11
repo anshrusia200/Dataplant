@@ -5,7 +5,7 @@ export interface ScheduleState {
   description: string;
   subject: string;
   frequency: string;
-  repeat: string;
+  repeat: String[];
   time: string;
 }
 

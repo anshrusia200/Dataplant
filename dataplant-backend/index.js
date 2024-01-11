@@ -40,7 +40,7 @@ app.post("/schedules", async (req, res) => {
     const schedule = await newSchedule.save();
     res.send(schedule);
   } catch (error) {
-    console.log(e);
+    console.log(error);
     res.status(500).send("Server Error");
   }
 });
