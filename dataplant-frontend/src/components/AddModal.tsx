@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { addSchedule } from "../api/index";
-import { AppDispatch } from "../store/store";
 import { Loader2 } from "lucide-react";
+import { useAppDispatch } from "../store/hooks";
 
 interface ModalProps {
   open: boolean;
   setOpen: any;
 }
 export const AddModal = ({ open, setOpen }: ModalProps) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const data: any = useSelector((state: any) => state.schedules);
   const times = [
     "00:00 AM",
@@ -120,7 +120,7 @@ export const AddModal = ({ open, setOpen }: ModalProps) => {
     <div
       className={`${
         open ? "flex" : "hidden"
-      } flex-col w-[350px] bg-[#fff] z-99 absolute right-[100px] rounded-[5px] shadow-xl p-4 font-nunito-sans `}
+      } flex-col w-[350px] bg-[#fff] z-99 absolute right-[140px] rounded-[5px] shadow-xl p-4 font-nunito-sans `}
     >
       <div className="text-[18px] font-semibold mb-2">Add Schedule</div>
       <div className="my-2 text-[15px] font-semibold">
@@ -213,6 +213,10 @@ export const AddModal = ({ open, setOpen }: ModalProps) => {
                   id="frequency"
                   className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm ring-1 ring-inset ring-gray-200 hover:bg-gray-50 focus:outline-none"
                 >
+                  <option value="none" selected disabled hidden>
+                    Select an Option
+                  </option>
+
                   <option value="First Monday">First Monday</option>
                   <option value="Last Friday">Last Friday</option>
                 </select>

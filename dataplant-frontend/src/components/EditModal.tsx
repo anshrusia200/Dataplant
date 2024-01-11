@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface ModalProps {
   open: boolean;
   setOpen: any;
   data: any;
+  top: number;
 }
-export const EditModal = ({ open, setOpen, data }: ModalProps) => {
+export const EditModal = ({ open, setOpen, data, top }: ModalProps) => {
   const times = [
     "00:00 AM",
     "00:30 AM",
@@ -56,13 +57,13 @@ export const EditModal = ({ open, setOpen, data }: ModalProps) => {
     "11:00 PM",
     "11:30 PM",
   ];
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [subject, setSubject] = useState("");
-  const [frequency, setFrequency] = useState("Weekly");
-  const [repeat, setRepeat] = useState("");
+  const [title, setTitle] = useState(data?.title);
+  const [description, setDescription] = useState(data?.description);
+  const [subject, setSubject] = useState(data?.subject);
+  const [frequency, setFrequency] = useState(data?.frequency);
+  const [repeat, setRepeat] = useState([]);
   const [checkedDays, setCheckedDays] = useState([""]);
-
+  const [time, setTime] = useState(data?.time);
   const toggleDay = (day: string) => {
     if (checkedDays.includes(day)) {
       setCheckedDays(checkedDays.filter((d) => d !== day));
@@ -71,13 +72,21 @@ export const EditModal = ({ open, setOpen, data }: ModalProps) => {
     }
   };
 
+  useEffect(() => {
+    if (frequency != "Daily") {
+      setCheckedDays(data?.repeat);
+    }
+    if (frequency == "Weekly") {
+      setCheckedDays(data?.repeat);
+    }
+  }, []);
   return (
     <div
       className={`${
         open ? "flex" : "hidden"
-      } flex-col w-[350px] bg-[#fff] z-99 absolute right-[100px] rounded-[5px] shadow-xl p-4 font-nunito-sans `}
+      } flex-col w-[350px] bg-[#fff] z-99 absolute right-[200px] top-[200px] rounded-[5px] shadow-xl p-4 font-nunito-sans `}
     >
-      <div className="text-[18px] font-semibold mb-2">Add Schedule</div>
+      <div className="text-[18px] font-semibold mb-2">Edit Schedule</div>
       <div className="my-2 text-[15px] font-semibold">
         <div className="flex w-full justify-between my-2 items-center">
           <div className="w-[30%]">Title</div>
@@ -85,6 +94,7 @@ export const EditModal = ({ open, setOpen, data }: ModalProps) => {
             <input
               onChange={(e) => setTitle(e.target.value)}
               type="text"
+              value={title}
               className="w-full border rounded py-1 px-3 text-sm focus:outline-none font-medium"
               placeholder="Please enter title"
             />
@@ -95,6 +105,7 @@ export const EditModal = ({ open, setOpen, data }: ModalProps) => {
           <div className="w-[70%]">
             <textarea
               onChange={(e) => setDescription(e.target.value)}
+              value={description}
               className="w-full py-2 px-3 text-sm border rounded focus:outline-none resize-none font-medium"
               placeholder="Please enter description"
             />
@@ -106,6 +117,7 @@ export const EditModal = ({ open, setOpen, data }: ModalProps) => {
             <input
               onChange={(e) => setSubject(e.target.value)}
               type="text"
+              value={subject}
               className="w-full border rounded py-1 px-3 text-sm focus:outline-none font-medium"
               placeholder="Please enter subject"
             />
@@ -117,6 +129,7 @@ export const EditModal = ({ open, setOpen, data }: ModalProps) => {
             <select
               onChange={(e) => setFrequency(e.target.value)}
               name="frequency"
+              value={frequency}
               id="frequency"
               className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm ring-1 ring-inset ring-gray-200 hover:bg-gray-50 focus:outline-none"
             >
@@ -183,6 +196,7 @@ export const EditModal = ({ open, setOpen, data }: ModalProps) => {
             <select
               name="frequency"
               id="frequency"
+              value={time}
               className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm ring-1 ring-inset ring-gray-200 hover:bg-gray-50 focus:outline-none"
             >
               {times.map((time) => (

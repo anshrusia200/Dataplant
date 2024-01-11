@@ -34,7 +34,20 @@ export const getSchedule = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const res = await instance.get("/schedules");
+      return res.data;
+    } catch (error: any) {
+      const { msg } = error.response.data.errors[0];
+      console.log(error);
+      return thunkAPI.rejectWithValue(msg);
+    }
+  }
+);
 
+export const deleteSchedule = createAsyncThunk(
+  "deleteSchedule",
+  async (scheduleId: string, thunkAPI) => {
+    try {
+      const res = await instance.delete(`/schedules/${scheduleId}`);
       return res.data;
     } catch (error: any) {
       const { msg } = error.response.data.errors[0];

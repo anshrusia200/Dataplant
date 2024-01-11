@@ -7,6 +7,7 @@ import { Nav } from "./components/layout/Nav";
 
 function App() {
   const [openModal, setOpenModal] = useState("none");
+
   return (
     <BrowserRouter>
       <Nav />

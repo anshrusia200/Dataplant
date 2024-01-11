@@ -8,12 +8,12 @@ export const Scheduler = () => {
   const [openModal, setOpenModal] = useState(false);
   return (
     <div className="flex w-full flex-col items-center">
-      <div className="flex justify-between w-[100%]">
+      <div className="flex justify-between w-[95%]">
         <Search />
         <Button open={openModal} setOpen={setOpenModal} />
         <AddModal open={openModal} setOpen={setOpenModal} />
       </div>
-      <div className="flex">
+      <div className="flex w-[95%]">
         <DataTable />
       </div>
     </div>

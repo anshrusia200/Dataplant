@@ -54,6 +54,20 @@ app.get("/schedules", async (req, res) => {
   }
 });
 
+app.delete("/schedules/:id", async (req, res) => {
+  try {
+    const scheduleId = req.params.id;
+    const deletedSchedule = await Schedule.findOneAndDelete({
+      _id: scheduleId,
+    });
+    const schedules = await Schedule.find();
+    res.send(schedules);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Server Error");
+  }
+});
+
 // if (node_env === "production") {
 //   const __directory = path.resolve();
 //   app.use(express.static(path.join(__directory, "/dataplant-frontend/dist")));

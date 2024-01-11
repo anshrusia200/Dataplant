@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { addSchedule, getSchedule } from "../../api";
+import { addSchedule, deleteSchedule, getSchedule } from "../../api";
 
 export interface ScheduleState {
   title: string;
@@ -43,10 +43,21 @@ const scheduleSlice = createSlice({
       })
       .addCase(getSchedule.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.schedules = [...state.schedules, action.payload];
-        // toast.success(`schedule added`);
+        state.schedules = action.payload;
       })
       .addCase(getSchedule.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error("error fetching schedule");
+      })
+      .addCase(deleteSchedule.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteSchedule.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.schedules = action.payload;
+        toast.success(`schedule deleted`);
+      })
+      .addCase(deleteSchedule.rejected, (state, action) => {
         state.isLoading = false;
         toast.error("error fetching schedule");
       });
