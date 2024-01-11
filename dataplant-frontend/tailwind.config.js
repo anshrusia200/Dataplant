@@ -9,5 +9,13 @@ export default {
       },
     },
   },
+  purge: {
+    // content: ["./{components,pages,layout}/**/*.{jsx,tsx}"],
+    options: {
+      whitelist: [
+        "react-toastify", // Add any other classes or styles used by react-toastify
+      ],
+    },
+  },
   plugins: [],
 };

@@ -44,17 +44,26 @@ app.post("/schedules", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+app.get("/schedules", async (req, res) => {
+  try {
+    const schedules = await Schedule.find();
+    res.send(schedules);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Server Error");
+  }
+});
 
-if (node_env === "production") {
-  const __directory = path.resolve();
-  app.use(express.static(path.join(__directory, "/dataplant-frontend/dist")));
-  app.get("*", (req, res) => {
-    res.sendFile(
-      path.resolve(__directory, "dataplant-frontend", "dist", "index.html")
-    );
-  });
-} else {
-  app.get("/", (req, res) => {
-    res.send("API service running 🚀");
-  });
-}
+// if (node_env === "production") {
+//   const __directory = path.resolve();
+//   app.use(express.static(path.join(__directory, "/dataplant-frontend/dist")));
+//   app.get("*", (req, res) => {
+//     res.sendFile(
+//       path.resolve(__directory, "dataplant-frontend", "dist", "index.html")
+//     );
+//   });
+// } else {
+//   app.get("/", (req, res) => {
+//     res.send("API service running 🚀");
+//   });
+// }

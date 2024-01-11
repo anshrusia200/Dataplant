@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { addNewSchedule } from "../api";
+import { useDispatch, useSelector } from "react-redux";
+import { addSchedule } from "../api/index";
+import { AppDispatch } from "../store/store";
+import { Loader2 } from "lucide-react";
 
 interface ModalProps {
   open: boolean;
   setOpen: any;
 }
 export const AddModal = ({ open, setOpen }: ModalProps) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const data: any = useSelector((state: any) => state.schedules);
   const times = [
     "00:00 AM",
     "00:30 AM",
@@ -87,16 +92,16 @@ export const AddModal = ({ open, setOpen }: ModalProps) => {
         : true) &&
       time
     ) {
+      var repeatsArray = frequency == "Weekly" ? checkedDays : repeat;
       var schedule = {
         title: title,
         description: description,
         subject: subject,
         frequency: frequency,
-        repeat: repeat,
+        repeat: repeatsArray,
         time: time,
       };
-      const res = await addNewSchedule(schedule);
-      console.log(res);
+      dispatch(addSchedule(schedule));
     } else {
       console.log("something missing");
       console.log(
@@ -240,10 +245,15 @@ export const AddModal = ({ open, setOpen }: ModalProps) => {
             Cancel
           </button>
           <button
-            className="bg-[#391E5A] text-white w-[100px] py-2 px-5 rounded-[5px] ml-4"
+            className="flex justify-center bg-[#391E5A] text-white w-[100px] py-2 px-5 rounded-[5px] ml-4 "
             onClick={handleAdd}
+            disabled={data.isLoading}
           >
-            Done
+            {!data.isLoading ? (
+              "Done"
+            ) : (
+              <Loader2 className="animate-spin" size={"18px"} />
+            )}
           </button>
         </div>
       </div>
