@@ -29,7 +29,7 @@ export const DataTable = () => {
             <td>1961</td>
             <td>1961</td>
             <td>
-              <button className="mx-1">
+              <button className="mx-1" >
                 <Pencil size="18px" />
               </button>
               <button className="mx-1">
@@ -52,7 +52,7 @@ export const DataTable = () => {
             <td>1961</td>
             <td>1961</td>
             <td>
-              <button>
+              <button >
                 <Pencil />
               </button>
               <button>

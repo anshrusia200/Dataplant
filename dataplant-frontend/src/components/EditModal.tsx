@@ -4,7 +4,7 @@ interface ModalProps {
   open: boolean;
   setOpen: any;
 }
-export const AddModal = ({ open, setOpen }: ModalProps) => {
+export const EditModal = ({ open, setOpen }: ModalProps) => {
   const times = [
     "00:00 AM",
     "00:30 AM",
@@ -61,37 +61,12 @@ export const AddModal = ({ open, setOpen }: ModalProps) => {
   const [frequency, setFrequency] = useState("Weekly");
   const [repeat, setRepeat] = useState("");
   const [checkedDays, setCheckedDays] = useState([""]);
-  const [time, setTime] = useState("");
 
   const toggleDay = (day: string) => {
     if (checkedDays.includes(day)) {
       setCheckedDays(checkedDays.filter((d) => d !== day));
     } else {
       setCheckedDays([...checkedDays, day]);
-    }
-  };
-
-  const handleAdd = async () => {
-    if (frequency == "Weekly") {
-      var repeatDays: string = "";
-      var days: string[] = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
-      days.forEach((day) => {
-        if (checkedDays.includes(day)) {
-          repeatDays += day;
-        }
-      });
-      setRepeat(repeatDays);
-    }
-    if (
-      title &&
-      description &&
-      subject &&
-      frequency &&
-      (frequency != "Daily" ? repeat : true) &&
-      time
-    ) {
-      
     }
   };
 
@@ -208,7 +183,6 @@ export const AddModal = ({ open, setOpen }: ModalProps) => {
               name="frequency"
               id="frequency"
               className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm ring-1 ring-inset ring-gray-200 hover:bg-gray-50 focus:outline-none"
-              onChange={(e) => setTime(e.target.value)}
             >
               {times.map((time) => (
                 <option value={time}>{time}</option>
@@ -223,10 +197,7 @@ export const AddModal = ({ open, setOpen }: ModalProps) => {
           >
             Cancel
           </button>
-          <button
-            className="bg-[#391E5A] text-white w-[100px] py-2 px-5 rounded-[5px] ml-4"
-            onClick={handleAdd}
-          >
+          <button className="bg-[#391E5A] text-white w-[100px] py-2 px-5 rounded-[5px] ml-4">
             Done
           </button>
         </div>

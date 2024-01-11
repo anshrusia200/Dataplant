@@ -4,7 +4,7 @@ export const Search = () => {
       <div className="relative">
         <input
           type="search"
-          className="block w-[300px] p-2 pr-[25px] text-sm text-gray-900 border border-gray-300 rounded-[5px] bg-gray-50"
+          className="block w-[300px] p-2 pr-[25px] focus:outline-none text-sm text-gray-900 border border-gray-300 rounded-[5px] bg-gray-50"
           placeholder="Search"
           required
         ></input>
