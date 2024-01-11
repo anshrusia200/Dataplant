@@ -9,7 +9,7 @@ const path = require("path");
 const cors = require("cors");
 const node_env = "dev";
 const router = express.Router();
-const Schedule = require("../models/Schedule");
+const Schedule = require("./models/Schedule");
 app.use(
   cors({
     origin: [/netlify\.app$/, /localhost:\d{4}$/],
