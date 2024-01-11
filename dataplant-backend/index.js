@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const PORT = 5000;
 const path = require("path");
 const cors = require("cors");
-const node_env = "dev";
+const node_env = "production";
 const router = express.Router();
 const Schedule = require("./models/Schedule");
 app.use(

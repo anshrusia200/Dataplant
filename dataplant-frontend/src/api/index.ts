@@ -2,13 +2,13 @@ import axios from "axios";
 
 import { ScheduleState } from "../store/slices/ScheduleSlice";
 
-// const instance = axios.create({
-//     baseURL: "https://calendar-backend-y8lh.onrender.com",
-//   });
+const instance = axios.create({
+  baseURL: "https://dataplant-backend-zftx.onrender.com/",
+});
 
 export const getAllSchedules = async () => {
   try {
-    const res = await axios.get("/");
+    const res = await instance.get("/");
 
     return res.data;
   } catch (e) {
@@ -25,7 +25,7 @@ export const addNewSchedule = async (newSchedule: ScheduleState) => {
     };
     const body = JSON.stringify(newSchedule);
 
-    const res = await axios.post("/", body, config);
+    const res = await instance.post("/", body, config);
 
     return res.data;
   } catch (e) {

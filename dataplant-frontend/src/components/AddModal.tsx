@@ -101,6 +101,9 @@ export const AddModal = ({ open, setOpen }: ModalProps) => {
         time: time,
       };
       const res = await addNewSchedule(schedule);
+      console.log(res);
+    } else {
+      console.log("something missing");
     }
   };
 
