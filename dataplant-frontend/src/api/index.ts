@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { ScheduleState } from "../store/slices/ScheduleSlice";
 
 const instance = axios.create({

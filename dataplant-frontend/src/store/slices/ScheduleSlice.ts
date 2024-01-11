@@ -39,7 +39,7 @@ const scheduleSlice = createSlice({
         state.schedules = [...state.schedules, action.payload];
         toast.success(`schedule added`);
       })
-      .addCase(addSchedule.rejected, (state, action) => {
+      .addCase(addSchedule.rejected, (state) => {
         state.isLoading = false;
         toast.error("error adding schedule");
       })
@@ -50,7 +50,7 @@ const scheduleSlice = createSlice({
         state.isLoading = false;
         state.schedules = action.payload;
       })
-      .addCase(getSchedule.rejected, (state, action) => {
+      .addCase(getSchedule.rejected, (state) => {
         state.isLoading = false;
         toast.error("error fetching schedule");
       })
@@ -62,7 +62,7 @@ const scheduleSlice = createSlice({
         state.schedules = action.payload;
         toast.success(`schedule deleted`);
       })
-      .addCase(deleteSchedule.rejected, (state, action) => {
+      .addCase(deleteSchedule.rejected, (state) => {
         state.isLoading = false;
         toast.error("error fetching schedule");
       })
@@ -74,7 +74,7 @@ const scheduleSlice = createSlice({
         state.schedules = action.payload;
         toast.success(`schedule edited`);
       })
-      .addCase(editSchedule.rejected, (state, action) => {
+      .addCase(editSchedule.rejected, (state) => {
         state.isLoading = false;
         toast.error("error editing schedule");
       });

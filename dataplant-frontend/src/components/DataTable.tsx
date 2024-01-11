@@ -8,6 +8,7 @@ import { SearchBarProps } from "./Search";
 
 export const DataTable = ({ input, setInput }: SearchBarProps) => {
   const [editModalOpen, setEditModalOpen] = useState(false);
+  console.log(setInput);
   const [modalData, setModalData] = useState();
   const [modalTop, setModalTop] = useState(0);
   const dispatch = useAppDispatch();

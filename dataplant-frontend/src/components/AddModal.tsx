@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { addSchedule } from "../api/index";
 import { Loader2 } from "lucide-react";

@@ -62,6 +62,7 @@ export const EditModal = ({ open, setOpen, data, top }: ModalProps) => {
     "11:00 PM",
     "11:30 PM",
   ];
+  console.log(top);
   const [title, setTitle] = useState(data?.title);
   const [description, setDescription] = useState(data?.description);
   const [subject, setSubject] = useState(data?.subject);
@@ -69,6 +70,7 @@ export const EditModal = ({ open, setOpen, data, top }: ModalProps) => {
   const [repeat, setRepeat] = useState(data?.repeat);
   const [checkedDays, setCheckedDays] = useState([""]);
   const [time, setTime] = useState(data?.time);
+  console.log(setTime, setScheduleId);
   const toggleDay = (day: string) => {
     if (checkedDays.includes(day)) {
       setCheckedDays(checkedDays.filter((d) => d !== day));
