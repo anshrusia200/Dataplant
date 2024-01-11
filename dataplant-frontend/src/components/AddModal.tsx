@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { addNewSchedule } from "../api";
 
 interface ModalProps {
   open: boolean;
@@ -91,7 +92,15 @@ export const AddModal = ({ open, setOpen }: ModalProps) => {
       (frequency != "Daily" ? repeat : true) &&
       time
     ) {
-      
+      var schedule = {
+        title: title,
+        description: description,
+        subject: subject,
+        frequency: frequency,
+        repeat: repeat,
+        time: time,
+      };
+      const res = await addNewSchedule(schedule);
     }
   };
 
