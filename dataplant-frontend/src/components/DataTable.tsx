@@ -4,20 +4,23 @@ import { EditModal } from "./EditModal";
 import { deleteSchedule, getSchedule } from "../api";
 import { useAppDispatch } from "../store/hooks";
 import { useSelector } from "react-redux";
-import { ScheduleState } from "../store/slices/ScheduleSlice";
+import { SearchBarProps } from "./Search";
 
-export const DataTable = () => {
+export const DataTable = ({ input, setInput }: SearchBarProps) => {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [modalData, setModalData] = useState();
   const [modalTop, setModalTop] = useState(0);
   const dispatch = useAppDispatch();
   const data = useSelector((state: any) => state.schedules);
+  const [rowData, setRowData] = useState(data?.schedules);
   console.log(data);
   useEffect(() => {
     if (data.schedules.length == 0) {
       dispatch(getSchedule());
     }
-  }, []);
+
+    setRowData(data.schedules);
+  }, [input, data]);
 
   const handleDelete = (id: string) => {
     dispatch(deleteSchedule(id));
@@ -29,7 +32,9 @@ export const DataTable = () => {
     setModalTop(topPosition);
     setModalData(schedule);
   };
-
+  const filteredData = rowData.filter((schedule: any) =>
+    schedule.title.toLowerCase().includes(input.toLowerCase())
+  );
   return (
     <>
       <div className="flex mt-6 font-nunito-sans w-[100%]">
@@ -44,36 +49,40 @@ export const DataTable = () => {
             </tr>
           </thead>
           <tbody className="w-full bg-[#ffffff]">
-            {data.schedules.map((schedule: any) => (
-              <tr className="border-b-2 font-medium ">
-                <td className="ml-1 pl-2">{schedule.title}</td>
-                <td className="line-clamp-2 mr-1 my-2">
-                  {schedule.description}
-                </td>
-                <td>{schedule.subject}</td>
-                <td>
-                  {schedule.frequency == "Daily"
-                    ? schedule.frequency + " at " + schedule.time
-                    : schedule.frequency == "Weekly"
-                    ? schedule.repeat.join(", ") + " at " + schedule.time
-                    : schedule.repeat[0] + " at " + schedule.time}
-                </td>
-                <td>
-                  <button
-                    className="mx-1"
-                    onClick={(e) => handleOpen(e, schedule)}
-                  >
-                    <Pencil size="18px" />
-                  </button>
-                  <button
-                    className="mx-1"
-                    onClick={() => handleDelete(schedule._id)}
-                  >
-                    <Trash2 size="18px" />
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {data.isLoading ? (
+              <div className="flex mx-auto text-base">Loading ...</div>
+            ) : (
+              filteredData.map((schedule: any) => (
+                <tr className="border-b-2 font-medium ">
+                  <td className="ml-1 pl-2">{schedule.title}</td>
+                  <td className="line-clamp-2 mr-1 my-2">
+                    {schedule.description}
+                  </td>
+                  <td>{schedule.subject}</td>
+                  <td>
+                    {schedule.frequency == "Daily"
+                      ? schedule.frequency + " at " + schedule.time
+                      : schedule.frequency == "Weekly"
+                      ? schedule.repeat.join(", ") + " at " + schedule.time
+                      : schedule.repeat[0] + " at " + schedule.time}
+                  </td>
+                  <td>
+                    <button
+                      className="mx-1"
+                      onClick={(e) => handleOpen(e, schedule)}
+                    >
+                      <Pencil size="18px" />
+                    </button>
+                    <button
+                      className="mx-1"
+                      onClick={() => handleDelete(schedule._id)}
+                    >
+                      <Trash2 size="18px" />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

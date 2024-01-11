@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../store/hooks";
 import { editSchedule } from "../api";
+import { Loader2 } from "lucide-react";
 
 interface ModalProps {
   open: boolean;
@@ -257,7 +258,11 @@ export const EditModal = ({ open, setOpen, data, top }: ModalProps) => {
             className="bg-[#391E5A] text-white w-[100px] py-2 px-5 rounded-[5px] ml-4"
             onClick={handleEdit}
           >
-            Done
+            {!data.isLoading ? (
+              "Done"
+            ) : (
+              <Loader2 className="animate-spin" size={"18px"} />
+            )}
           </button>
         </div>
       </div>

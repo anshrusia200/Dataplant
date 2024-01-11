@@ -95,16 +95,8 @@ app.patch("/schedules/:id", async (req, res) => {
   }
 });
 
-// if (node_env === "production") {
-//   const __directory = path.resolve();
-//   app.use(express.static(path.join(__directory, "/dataplant-frontend/dist")));
-//   app.get("*", (req, res) => {
-//     res.sendFile(
-//       path.resolve(__directory, "dataplant-frontend", "dist", "index.html")
-//     );
-//   });
-// } else {
-//   app.get("/", (req, res) => {
-//     res.send("API service running 🚀");
-//   });
-// }
+app.get("/schedules/:id", async (req, res) => {
+  const scheduleId = req.params.id;
+  const schedule = await Schedule.findById(scheduleId);
+  res.send(schedule);
+});

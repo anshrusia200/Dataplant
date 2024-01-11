@@ -6,15 +6,16 @@ import { useState } from "react";
 
 export const Scheduler = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [searchInput, setSearchInput] = useState<string>("");
   return (
     <div className="flex w-full flex-col items-center">
       <div className="flex justify-between w-[95%]">
-        <Search />
+        <Search input={searchInput} setInput={setSearchInput} />
         <Button open={openModal} setOpen={setOpenModal} />
         <AddModal open={openModal} setOpen={setOpenModal} />
       </div>
       <div className="flex w-[95%]">
-        <DataTable />
+        <DataTable input={searchInput} setInput={setSearchInput} />
       </div>
     </div>
   );
