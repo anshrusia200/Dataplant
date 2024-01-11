@@ -67,6 +67,33 @@ app.delete("/schedules/:id", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+app.patch("/schedules/:id", async (req, res) => {
+  try {
+    const scheduleId = req.params.id;
+
+    const existingSchedule = await Schedule.findById(scheduleId);
+
+    if (!existingSchedule) {
+      return res.status(404).send("Schedule not found");
+    }
+
+    if (req.body.title) existingSchedule.title = req.body.title;
+    if (req.body.description)
+      existingSchedule.description = req.body.description;
+    if (req.body.subject) existingSchedule.subject = req.body.subject;
+    if (req.body.frequency) existingSchedule.frequency = req.body.frequency;
+    if (req.body.repeat) existingSchedule.repeat = req.body.repeat;
+    if (req.body.time) existingSchedule.time = req.body.time;
+
+    const updatedSchedule = await existingSchedule.save();
+    const schedules = await Schedule.find();
+
+    res.send(schedules);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Server Error");
+  }
+});
 
 // if (node_env === "production") {
 //   const __directory = path.resolve();

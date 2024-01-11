@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useAppDispatch } from "../store/hooks";
+import { editSchedule } from "../api";
 
 interface ModalProps {
   open: boolean;
@@ -7,6 +9,8 @@ interface ModalProps {
   top: number;
 }
 export const EditModal = ({ open, setOpen, data, top }: ModalProps) => {
+  const dispatch = useAppDispatch();
+  const [scheduleId, setScheduleId] = useState(data?._id);
   const times = [
     "00:00 AM",
     "00:30 AM",
@@ -61,7 +65,7 @@ export const EditModal = ({ open, setOpen, data, top }: ModalProps) => {
   const [description, setDescription] = useState(data?.description);
   const [subject, setSubject] = useState(data?.subject);
   const [frequency, setFrequency] = useState(data?.frequency);
-  const [repeat, setRepeat] = useState([]);
+  const [repeat, setRepeat] = useState(data?.repeat);
   const [checkedDays, setCheckedDays] = useState([""]);
   const [time, setTime] = useState(data?.time);
   const toggleDay = (day: string) => {
@@ -73,13 +77,49 @@ export const EditModal = ({ open, setOpen, data, top }: ModalProps) => {
   };
 
   useEffect(() => {
-    if (frequency != "Daily") {
-      setCheckedDays(data?.repeat);
-    }
     if (frequency == "Weekly") {
       setCheckedDays(data?.repeat);
     }
   }, []);
+
+  const handleEdit = () => {
+    if (frequency == "Weekly") {
+    }
+    if (
+      title &&
+      description &&
+      subject &&
+      frequency &&
+      (frequency != "Daily"
+        ? frequency == "Weekly"
+          ? checkedDays.length
+          : repeat.length
+        : true) &&
+      time
+    ) {
+      var repeatsArray = frequency == "Weekly" ? checkedDays : repeat;
+      var schedule = {
+        title: title,
+        description: description,
+        subject: subject,
+        frequency: frequency,
+        repeat: repeatsArray,
+        time: time,
+      };
+      dispatch(editSchedule({ scheduleId, schedule }));
+    } else {
+      console.log("something missing");
+      console.log(
+        title,
+        description,
+        subject,
+        frequency,
+        checkedDays,
+        repeat,
+        time
+      );
+    }
+  };
   return (
     <div
       className={`${
@@ -176,8 +216,9 @@ export const EditModal = ({ open, setOpen, data, top }: ModalProps) => {
                 </div>
               ) : (
                 <select
-                  onChange={(e) => setRepeat(e.target.value)}
+                  onChange={(e) => setRepeat([e.target.value])}
                   name="frequency"
+                  value={repeat[0]}
                   id="frequency"
                   className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm ring-1 ring-inset ring-gray-200 hover:bg-gray-50 focus:outline-none"
                 >
@@ -212,7 +253,10 @@ export const EditModal = ({ open, setOpen, data, top }: ModalProps) => {
           >
             Cancel
           </button>
-          <button className="bg-[#391E5A] text-white w-[100px] py-2 px-5 rounded-[5px] ml-4">
+          <button
+            className="bg-[#391E5A] text-white w-[100px] py-2 px-5 rounded-[5px] ml-4"
+            onClick={handleEdit}
+          >
             Done
           </button>
         </div>

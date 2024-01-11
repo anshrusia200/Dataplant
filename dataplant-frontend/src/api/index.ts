@@ -56,3 +56,27 @@ export const deleteSchedule = createAsyncThunk(
     }
   }
 );
+export const editSchedule = createAsyncThunk(
+  "editSchedule",
+  async ({ scheduleId, schedule }: any, thunkAPI) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const body = JSON.stringify(schedule);
+
+      const res = await instance.patch(
+        `/schedules/${scheduleId}`,
+        body,
+        config
+      );
+      return res.data;
+    } catch (error: any) {
+      const { msg } = error.response.data.errors[0];
+      console.log(error);
+      return thunkAPI.rejectWithValue(msg);
+    }
+  }
+);
