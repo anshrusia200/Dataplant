@@ -50,9 +50,7 @@ export const DataTable = ({ input, setInput }: SearchBarProps) => {
             </tr>
           </thead>
           <tbody className="w-full bg-[#ffffff]">
-            {data.isLoading ? (
-              <div className="flex mx-auto text-base">Loading ...</div>
-            ) : (
+            {
               filteredData.map((schedule: any) => (
                 <tr className="border-b-2 font-medium ">
                   <td className="ml-1 pl-2">{schedule.title}</td>
@@ -82,7 +80,7 @@ export const DataTable = ({ input, setInput }: SearchBarProps) => {
                     </button>
                   </td>
                 </tr>
-              ))
+              )
             )}
           </tbody>
         </table>
