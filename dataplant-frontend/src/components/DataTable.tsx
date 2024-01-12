@@ -50,38 +50,36 @@ export const DataTable = ({ input, setInput }: SearchBarProps) => {
             </tr>
           </thead>
           <tbody className="w-full bg-[#ffffff]">
-            {
-              filteredData.map((schedule: any) => (
-                <tr className="border-b-2 font-medium ">
-                  <td className="ml-1 pl-2">{schedule.title}</td>
-                  <td className="line-clamp-2 mr-1 my-2">
-                    {schedule.description}
-                  </td>
-                  <td>{schedule.subject}</td>
-                  <td>
-                    {schedule.frequency == "Daily"
-                      ? schedule.frequency + " at " + schedule.time
-                      : schedule.frequency == "Weekly"
-                      ? schedule.repeat.join(", ") + " at " + schedule.time
-                      : schedule.repeat[0] + " at " + schedule.time}
-                  </td>
-                  <td>
-                    <button
-                      className="mx-1"
-                      onClick={(e) => handleOpen(e, schedule)}
-                    >
-                      <Pencil size="18px" />
-                    </button>
-                    <button
-                      className="mx-1"
-                      onClick={() => handleDelete(schedule._id)}
-                    >
-                      <Trash2 size="18px" />
-                    </button>
-                  </td>
-                </tr>
-              )
-            )}
+            {filteredData.map((schedule: any) => (
+              <tr className="border-b-2 font-medium ">
+                <td className="ml-1 pl-2">{schedule.title}</td>
+                <td className="line-clamp-2 mr-1 my-2">
+                  {schedule.description}
+                </td>
+                <td>{schedule.subject}</td>
+                <td>
+                  {schedule.frequency == "Daily"
+                    ? schedule.frequency + " at " + schedule.time
+                    : schedule.frequency == "Weekly"
+                    ? schedule.repeat.join(", ") + " at " + schedule.time
+                    : schedule.repeat[0] + " at " + schedule.time}
+                </td>
+                <td>
+                  <button
+                    className="mx-1"
+                    onClick={(e) => handleOpen(e, schedule)}
+                  >
+                    <Pencil size="18px" />
+                  </button>
+                  <button
+                    className="mx-1"
+                    onClick={() => handleDelete(schedule._id)}
+                  >
+                    <Trash2 size="18px" />
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
